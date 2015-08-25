@@ -19,7 +19,8 @@ namespace WindowsFormsApplication1
         private Bitmap currentImage;
         public int tri = 0;
         public int rect = 0;
-        public int cir =0;
+        public int cir = 0;
+        public float rad = 0;
 
         public PictureModificator(Bitmap currentImage)
         {
@@ -106,10 +107,11 @@ namespace WindowsFormsApplication1
 
                     Graphics g = Graphics.FromImage(image);
                     Pen yellowPen = new Pen(Color.Yellow, 2); // circles
-                    Pen redPen = new Pen(Color.Red, 2);       // quadrilateral
-                    Pen brownPen = new Pen(Color.Brown, 2);   // quadrilateral with known sub-type
-                    Pen greenPen = new Pen(Color.Green, 2);   // known triangle
-                    Pen bluePen = new Pen(Color.Blue, 2);     // triangle
+                    Pen redPen = new Pen(Color.Red, 5);       // quadrilateral
+                    Pen brownPen = new Pen(Color.Brown, 5);   // quadrilateral with known sub-type
+                    Pen greenPen = new Pen(Color.Green, 5);   // known triangle
+                    Pen bluePen = new Pen(Color.Blue, 5);     // triangle
+                    Pen orangePen = new Pen(Color.Orange, 5); // my triangle
 
                     for (int i = 0, n = baBlobs.Length; i < n; i++)
                     {
@@ -118,41 +120,116 @@ namespace WindowsFormsApplication1
                         //AForge.Point center;
                         DoublePoint center;
                         double radius;
+                        List<IntPoint> corners;
+                        //  float _radius;
+
 
                         // is circle ?
-                        if (shapeChecker.IsCircle(edgePoints, out center, out radius))
+                        /*if (shapeChecker.IsCircle(edgePoints, out center, out radius))
                         {
                             g.DrawEllipse(yellowPen,
                                 (float)(center.X - radius), (float)(center.Y - radius),
                                 (float)(radius * 2), (float)(radius * 2));
                             cir += 1;
                         }
-                        else
+                         */
+                        if (shapeChecker.IsCircle(edgePoints, out center, out radius))
                         {
-                            List<IntPoint> corners;
+                            string _shapeString = "" + shapeChecker.CheckShapeType(edgePoints);
+                            System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
+                            System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.Chocolate);
+                            Pen _pen = new Pen(Color.GreenYellow);
+                            int x = (int)center.X;
+                            int y = (int)center.Y;
+                            g.DrawString(_shapeString, _font, _brush, x, y);
+                            g.DrawEllipse(_pen, (float)(center.X - radius),
+                                                 (float)(center.Y - radius),
+                                                 (float)(radius * 2),
+                                                 (float)(radius * 2));
+                            rad = (float)radius;
 
-                            // is triangle or quadrilateral
-                            if (shapeChecker.IsConvexPolygon(edgePoints, out corners))
-                            {
-                                PolygonSubType subType = shapeChecker.CheckPolygonSubType(corners);
-                                Pen pen;
-                                if (subType == PolygonSubType.Unknown)
-                                {
-                                    pen = (corners.Count == 4) ? redPen : bluePen;
+                        }
+
+
+                        /*  else if (shapeChecker.IsTriangle(edgePoints, out corners))
+                          {
+                              g.DrawPolygon(redPen, ToPointsArray(corners));
+                              tri += 1;
+                            
+                          }
+                          else
+                          {
+                             // List<IntPoint> corners;
+
+                              // is triangle or quadrilateral
+                              if (shapeChecker.IsConvexPolygon(edgePoints, out corners))
+                              {
+                                  PolygonSubType subType = shapeChecker.CheckPolygonSubType(corners);
+                                  Pen pen;
+                                  if (subType == PolygonSubType.Unknown)
+                                  {
+                                      pen = (corners.Count == 4) ? orangePen : bluePen;
                                     
-                                    rect += 1;
-                                }
-                                else
-                                {
-                                    pen = (corners.Count == 4) ? brownPen : greenPen;
-                                    tri += 1;
-                                }
+                                      rect += 1;
+                                  }
+                                  else
+                                  {
+                                   
+                                      pen = (corners.Count == 4) ? brownPen : orangePen;
+                                    
+                                  }
 
-                                g.DrawPolygon(pen, ToPointsArray(corners));
+                                  g.DrawPolygon(pen, ToPointsArray(corners));
+                              }
+                         */
+                        if (shapeChecker.IsQuadrilateral(edgePoints, out corners))
+                        {
+
+                            //MessageBox.Show(""+_shapeChecker.CheckShapeType(_edgePoint));
+                            System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
+                            System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.PaleGreen);
+                            System.Drawing.Point[] _coordinates = ToPointsArray(corners);
+                            if (_coordinates.Length == 4)
+                            {
+                                int _x = _coordinates[0].X;
+                                int _y = _coordinates[0].Y;
+                                Pen _pen = new Pen(Color.Brown);
+                                string _shapeString = "" + shapeChecker.CheckShapeType(edgePoints);
+                                g.DrawString(_shapeString, _font, _brush, _x, _y);
+                                g.DrawPolygon(_pen, ToPointsArray(corners));
                             }
                         }
+                        if (shapeChecker.IsConvexPolygon(edgePoints, out corners))
+                        {
+
+                            //MessageBox.Show(""+_shapeChecker.CheckShapeType(_edgePoint));
+                            System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
+                            System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.PaleGreen);
+                            System.Drawing.Point[] _coordinates = ToPointsArray(corners);
+                            if (_coordinates.Length == 5)
+                            {
+                                int _x = _coordinates[0].X;
+                                int _y = _coordinates[0].Y;
+                                Pen _pen = new Pen(Color.Brown);
+                                string _shapeString = "" + shapeChecker.CheckShapeType(edgePoints);
+                                g.DrawString(_shapeString, _font, _brush, _x, _y);
+                                g.DrawPolygon(_pen, ToPointsArray(corners));
+                            }
+                        }
+                        if (shapeChecker.IsTriangle(edgePoints, out corners))
+                        {
+                            string _shapeString = "" + shapeChecker.CheckShapeType(edgePoints);
+                            System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
+                            System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.Brown);
+                            Pen _pen = new Pen(Color.GreenYellow);
+                            int x = (int)center.X;
+                            int y = (int)center.Y;
+                            g.DrawString(_shapeString, _font, _brush, x, y);
+                            g.DrawPolygon(_pen, ToPointsArray(corners));
+                        }
+
                     }
-                   
+
                     yellowPen.Dispose();
                     redPen.Dispose();
                     greenPen.Dispose();

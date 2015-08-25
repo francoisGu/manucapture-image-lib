@@ -19,17 +19,17 @@ namespace WindowsFormsApplication1
         public MainWindow()
         {
             InitializeComponent();
-            timer1.Start();
+            // timer1.Start();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void start_Click(object sender, EventArgs e)
         {
-            
+
 
         }
 
@@ -53,14 +53,14 @@ namespace WindowsFormsApplication1
 
         private void refresh_Click(object sender, EventArgs e)
         {
-           
+
         }
 
 
 
         private void btnSnapshot_Click(object sender, EventArgs e)
         {
-           
+
         }
 
 
@@ -82,25 +82,25 @@ namespace WindowsFormsApplication1
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            
+
 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-           
+
         }
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
             //pbSnapshotView.Image = myCamHandler.getSnapshot();
-           // analyzePicture();
+            // analyzePicture();
         }
 
         private void btnAnalyze_Click_1(object sender, EventArgs e)
         {
             analyzePicture();
-            label1.Text = myPicAnalyzer.rect.ToString();
+            label1.Text = myPicAnalyzer.rad.ToString();
             label2.Text = myPicAnalyzer.tri.ToString();
             label3.Text = myPicAnalyzer.cir.ToString();
         }
@@ -126,30 +126,30 @@ namespace WindowsFormsApplication1
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-          // myCamHandler = new CameraHandler(pbCamPreview);
-          // setNewListBoxContent();
-          // if (myCamHandler.setVideoSourceByIndex(lstDeviceList.SelectedIndex))
-          // {
-          //  myCamHandler.startCapture();
-          // }
+            // myCamHandler = new CameraHandler(pbCamPreview);
+            // setNewListBoxContent();
+            // if (myCamHandler.setVideoSourceByIndex(lstDeviceList.SelectedIndex))
+            // {
+            //  myCamHandler.startCapture();
+            // }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-           // ProcessImage((Bitmap)Bitmap.FromFile(openFileDialog.FileName));
+            // ProcessImage((Bitmap)Bitmap.FromFile(openFileDialog.FileName));
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     pbSnapshotView.Image = Image.FromFile(openFileDialog1.FileName);
-                    
+
                 }
                 catch
                 {
                     MessageBox.Show("Failed loading selected image file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            
+
         }
 
     }
