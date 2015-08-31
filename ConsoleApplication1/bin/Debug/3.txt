@@ -1,0 +1,48 @@
+<circle>
+	 radius: 23
+	 center: {X=71, Y=55}
+<\circle>
+<line>
+	 point: {X=194,Y=144}
+	 point: {X=276,Y=178}
+<\line>
+<line>
+	 point: {X=59,Y=181}
+	 point: {X=98,Y=162}
+<\line>
+<line>
+	 point: {X=218,Y=70}
+	 point: {X=249,Y=69}
+<\line>
+<line>
+	 point: {X=113,Y=156}
+	 point: {X=113,Y=109}
+<\line>
+<line>
+	 point: {X=111,Y=76}
+	 point: {X=111,Y=33}
+<\line>
+<line>
+	 point: {X=110,Y=157}
+	 point: {X=169,Y=133}
+<\line>
+<line>
+	 point: {X=297,Y=113}
+	 point: {X=297,Y=70}
+<\line>
+<line>
+	 point: {X=119,Y=36}
+	 point: {X=151,Y=79}
+<\line>
+<line>
+	 point: {X=217,Y=113}
+	 point: {X=217,Y=71}
+<\line>
+<line>
+	 point: {X=80,Y=171}
+	 point: {X=115,Y=156}
+<\line>
+<line>
+	 point: {X=236,Y=162}
+	 point: {X=272,Y=177}
+<\line>

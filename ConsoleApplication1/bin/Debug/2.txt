@@ -1,0 +1,97 @@
+<circle>
+	 radius: 26.40076
+	 center: {X=67, Y=63}
+<\circle>
+<line>
+	 point: {X=297,Y=13}
+	 point: {X=314,Y=50}
+<\line>
+<line>
+	 point: {X=105,Y=144}
+	 point: {X=161,Y=145}
+<\line>
+<line>
+	 point: {X=259,Y=90}
+	 point: {X=283,Y=36}
+<\line>
+<line>
+	 point: {X=262,Y=71}
+	 point: {X=285,Y=26}
+<\line>
+<line>
+	 point: {X=57,Y=34}
+	 point: {X=87,Y=39}
+<\line>
+<line>
+	 point: {X=316,Y=54}
+	 point: {X=332,Y=85}
+<\line>
+<line>
+	 point: {X=303,Y=33}
+	 point: {X=327,Y=87}
+<\line>
+<line>
+	 point: {X=45,Y=83}
+	 point: {X=78,Y=91}
+<\line>
+<line>
+	 point: {X=241,Y=146}
+	 point: {X=281,Y=147}
+<\line>
+<line>
+	 point: {X=132,Y=116}
+	 point: {X=163,Y=115}
+<\line>
+<line>
+	 point: {X=131,Y=115}
+	 point: {X=131,Y=66}
+<\line>
+<line>
+	 point: {X=89,Y=84}
+	 point: {X=96,Y=53}
+<\line>
+<line>
+	 point: {X=209,Y=116}
+	 point: {X=209,Y=64}
+<\line>
+<line>
+	 point: {X=269,Y=64}
+	 point: {X=287,Y=30}
+<\line>
+<polygon>
+	 point: {X=59,Y=37}
+	 point: {X=93,Y=55}
+	 point: {X=72,Y=89}
+	 point: {X=41,Y=69}
+<\polygon>
+<polygon>
+	 point: {X=64,Y=36}
+	 point: {X=46,Y=46}
+	 point: {X=41,Y=69}
+	 point: {X=72,Y=89}
+	 point: {X=94,Y=60}
+<\polygon>
+<polygon>
+	 point: {X=160,Y=28}
+	 point: {X=177,Y=37}
+	 point: {X=166,Y=55}
+	 point: {X=151,Y=46}
+<\polygon>
+<polygon>
+	 point: {X=160,Y=28}
+	 point: {X=151,Y=36}
+	 point: {X=151,Y=47}
+	 point: {X=166,Y=55}
+	 point: {X=176,Y=48}
+	 point: {X=177,Y=37}
+<\polygon>
+<polygon>
+	 point: {X=294,Y=17}
+	 point: {X=328,Y=85}
+	 point: {X=261,Y=87}
+<\polygon>
+<polygon>
+	 point: {X=293,Y=16}
+	 point: {X=259,Y=85}
+	 point: {X=327,Y=87}
+<\polygon>

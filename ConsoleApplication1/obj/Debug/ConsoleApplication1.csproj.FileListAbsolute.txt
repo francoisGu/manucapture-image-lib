@@ -1,0 +1,15 @@
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\Emgu.CV.dll
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\Emgu.Util.dll
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\Emgu.CV.pdb
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\Emgu.CV.xml
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\Emgu.Util.pdb
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\bin\Debug\Emgu.Util.xml
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+c:\users\f\documents\visual studio 2015\Projects\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+D:\Git\manucapture-image-lib\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+D:\Git\manucapture-image-lib\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+D:\Git\manucapture-image-lib\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb

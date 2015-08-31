@@ -1,0 +1,147 @@
+<circle>
+	 radius: 47.70744
+	 center: {X=141, Y=251}
+<\circle>
+<line>
+	 point: {X=267,Y=133}
+	 point: {X=321,Y=47}
+<\line>
+<line>
+	 point: {X=267,Y=107}
+	 point: {X=314,Y=32}
+<\line>
+<line>
+	 point: {X=311,Y=269}
+	 point: {X=341,Y=268}
+<\line>
+<line>
+	 point: {X=215,Y=73}
+	 point: {X=225,Y=144}
+<\line>
+<line>
+	 point: {X=101,Y=172}
+	 point: {X=161,Y=165}
+<\line>
+<line>
+	 point: {X=193,Y=39}
+	 point: {X=203,Y=88}
+<\line>
+<line>
+	 point: {X=335,Y=220}
+	 point: {X=335,Y=184}
+<\line>
+<line>
+	 point: {X=344,Y=78}
+	 point: {X=367,Y=121}
+<\line>
+<line>
+	 point: {X=101,Y=187}
+	 point: {X=153,Y=181}
+<\line>
+<line>
+	 point: {X=206,Y=26}
+	 point: {X=212,Y=64}
+<\line>
+<line>
+	 point: {X=237,Y=221}
+	 point: {X=237,Y=183}
+<\line>
+<line>
+	 point: {X=256,Y=183}
+	 point: {X=330,Y=185}
+<\line>
+<line>
+	 point: {X=128,Y=29}
+	 point: {X=178,Y=24}
+<\line>
+<line>
+	 point: {X=301,Y=283}
+	 point: {X=334,Y=284}
+<\line>
+<line>
+	 point: {X=267,Y=134}
+	 point: {X=302,Y=138}
+<\line>
+<line>
+	 point: {X=62,Y=117}
+	 point: {X=69,Y=149}
+<\line>
+<line>
+	 point: {X=335,Y=36}
+	 point: {X=363,Y=81}
+<\line>
+<line>
+	 point: {X=79,Y=124}
+	 point: {X=85,Y=167}
+<\line>
+<line>
+	 point: {X=247,Y=145}
+	 point: {X=286,Y=151}
+<\line>
+<line>
+	 point: {X=203,Y=95}
+	 point: {X=209,Y=127}
+<\line>
+<line>
+	 point: {X=367,Y=88}
+	 point: {X=391,Y=142}
+<\line>
+<line>
+	 point: {X=247,Y=134}
+	 point: {X=269,Y=103}
+<\line>
+<line>
+	 point: {X=103,Y=172}
+	 point: {X=133,Y=169}
+<\line>
+<line>
+	 point: {X=353,Y=67}
+	 point: {X=374,Y=101}
+<\line>
+<line>
+	 point: {X=208,Y=31}
+	 point: {X=212,Y=63}
+<\line>
+<line>
+	 point: {X=325,Y=48}
+	 point: {X=355,Y=96}
+<\line>
+<line>
+	 point: {X=350,Y=61}
+	 point: {X=372,Y=97}
+<\line>
+<polygon>
+	 point: {X=93,Y=216}
+	 point: {X=91,Y=285}
+	 point: {X=124,Y=297}
+	 point: {X=77,Y=241}
+	 point: {X=127,Y=203}
+	 point: {X=191,Y=248}
+	 point: {X=149,Y=297}
+	 point: {X=179,Y=281}
+	 point: {X=170,Y=212}
+<\polygon>
+<polygon>
+	 point: {X=348,Y=168}
+	 point: {X=239,Y=172}
+	 point: {X=239,Y=283}
+	 point: {X=239,Y=173}
+	 point: {X=340,Y=167}
+	 point: {X=353,Y=283}
+<\polygon>
+<polygon>
+	 point: {X=314,Y=32}
+	 point: {X=247,Y=145}
+	 point: {X=328,Y=29}
+	 point: {X=388,Y=157}
+<\polygon>
+<polygon>
+	 point: {X=206,Y=26}
+	 point: {X=54,Y=31}
+	 point: {X=71,Y=177}
+	 point: {X=168,Y=178}
+	 point: {X=70,Y=175}
+	 point: {X=54,Y=32}
+	 point: {X=173,Y=24}
+	 point: {X=222,Y=174}
+<\polygon>
