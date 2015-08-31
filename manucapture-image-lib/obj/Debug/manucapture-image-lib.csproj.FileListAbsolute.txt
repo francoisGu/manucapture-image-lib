@@ -1,1 +1,2 @@
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.exe.config
+H:\new manucap\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.exe.config
