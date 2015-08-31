@@ -68,3 +68,4 @@ C:\development\vs\git\manucapture-image-lib\AforgeTest\obj\Debug\AforgeTest.pdb
 C:\development\vs\git\AforgeTest\bin\Debug\AforgeTest.exe.config
 C:\development\vs\git\AforgeTest\obj\Debug\AforgeTest.exe
 C:\development\vs\git\AforgeTest\obj\Debug\AforgeTest.pdb
+D:\Git\manucapture-image-lib\AforgeTest\bin\Debug\AforgeTest.exe.config
