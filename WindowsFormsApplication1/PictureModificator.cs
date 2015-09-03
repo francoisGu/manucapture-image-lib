@@ -300,6 +300,10 @@ namespace WindowsFormsApplication1
                             int side3_y = 0;
                             int side4_x = 0;
                             int side4_y = 0;
+                            int Side1_length = 0;
+                            int Side2_length = 0;
+                            int Side3_length = 0;
+                            int Side4_length = 0;
                             foreach (IntPoint corner in corners)
                             {
                                 count++;
@@ -321,6 +325,7 @@ namespace WindowsFormsApplication1
 
 
                                 }
+                                    
                                 else if (count == 3)
                                 {
                                     Console.WriteLine("Point " + count + " " + corner);
@@ -339,12 +344,22 @@ namespace WindowsFormsApplication1
                                 //Console.WriteLine("length of the sides");
                                
                             }
-                            
+
+
+                            Side1_length = side2_x - side1_x;
+                            Side2_length = side3_y - side2_y;
+                            Side3_length = side3_x - side4_x;
+                            Side4_length = side4_y - side1_y;
+                            Console.WriteLine("Length of side 1 " + Side1_length);
+                            Console.WriteLine("Length of side 2 " + Side2_length);
+                            Console.WriteLine("Length of side 3 " + Side3_length);
+                            Console.WriteLine("Length of side 4 " + Side4_length);
                            
                             
                           
                             
                         }
+
                         if (shapeChecker.IsConvexPolygon(edgePoints, out corners))
                         {
                            

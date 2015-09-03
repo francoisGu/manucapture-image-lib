@@ -14,3 +14,14 @@ C:\Users\Fahee\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\Wi
 C:\Users\Fahee\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MainWindow.resources
 C:\Users\Fahee\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 C:\Users\Fahee\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Aforge.net.csproj.GenerateResource.Cache
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\bin\Debug\AForge.Video.xml
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\bin\Debug\AForge.Video.DirectShow.xml
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\obj\Debug\Aforge.net.csprojResolveAssemblyReference.cache
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MainWindow.resources
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+H:\manucap\manucapture-image-lib\WindowsFormsApplication1\obj\Debug\Aforge.net.csproj.GenerateResource.Cache
