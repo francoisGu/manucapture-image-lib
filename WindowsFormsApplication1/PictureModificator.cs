@@ -149,7 +149,7 @@ namespace WindowsFormsApplication1
                    
                     cFilter.ApplyInPlace(bmData);
 
-
+                    ShapePolygon spp = new ShapePolygon();
                     // locate objects
                     BlobCounter bCounter = new BlobCounter();
 
@@ -181,6 +181,7 @@ namespace WindowsFormsApplication1
                     colors.Add(PolygonSubType.Rectangle, Color.Green);
                     colors.Add(PolygonSubType.Square, Color.Blue);
                     colors.Add(PolygonSubType.Rhombus, Color.Gray);
+                    //colors.Add(ShapePolygon.Pentagon, Color.Chocolate);
 
                     for (int i = 0, n = baBlobs.Length; i < n; i++)
                     {
@@ -207,6 +208,7 @@ namespace WindowsFormsApplication1
 
                         if (shapeChecker.IsCircle(edgePoints, out center, out radius))
                         {
+                            Pen _pen1 = new Pen(Color.Blue);
                             string _shapeString = "" + shapeChecker.CheckShapeType(edgePoints);
                             System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
                             System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.Chocolate);
@@ -219,6 +221,7 @@ namespace WindowsFormsApplication1
                                                  (float)(radius * 2),
                                                  (float)(radius * 2));
                           //  rad = (float)radius;
+                            Console.WriteLine(x + " circle x , y " + y);
 
                         }
                         
@@ -236,6 +239,7 @@ namespace WindowsFormsApplication1
                                                  (float)(center.Y - rad2),
                                                  (float)(rad2 * 2),
                                                  (float)(rad2 * 2));
+                            Console.WriteLine(x + " circle y , x " + y);
                            // rad = (float)rad;
 
                         }
@@ -273,7 +277,7 @@ namespace WindowsFormsApplication1
                          */
                         if (shapeChecker.IsQuadrilateral(edgePoints, out corners))
                         {
-                         
+                            Pen _pen1 = new Pen(Color.Blue);
                             //MessageBox.Show(""+_shapeChecker.CheckShapeType(_edgePoint));
                             System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
                             System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.PaleGreen);
@@ -287,39 +291,97 @@ namespace WindowsFormsApplication1
                                 g.DrawString(_shapeString, _font, _brush, _x, _y);
                                 g.DrawPolygon(_pen, ToPointsArray(corners));
                             }
+                            int count = 0;
+                            int side1_x = 0;
+                            int side1_y = 0;
+                            int side2_x = 0;
+                            int side2_y = 0;
+                            int side3_x = 0;
+                            int side3_y = 0;
+                            int side4_x = 0;
+                            int side4_y = 0;
+                            foreach (IntPoint corner in corners)
+                            {
+                                count++;
+                                if (count == 1)
+                                {
+                                    //Console.WriteLine("count is " + count);
+                                    Console.WriteLine("Point "+ count +" " + corner);
+                                    side1_x = corner.X;
+                                    side1_y = corner.Y;
+                                    
+                                    
+
+                                }
+                                else if (count == 2)
+                                {
+                                    Console.WriteLine("Point " + count + " " + corner);
+                                    side2_x = corner.X;
+                                    side2_y = corner.Y;
+
+
+                                }
+                                else if (count == 3)
+                                {
+                                    Console.WriteLine("Point " + count + " " + corner);
+                                    side3_x = corner.X;
+                                    side3_y = corner.Y;
+                                }
+                                else if (count == 4)
+                                {
+                                    Console.WriteLine("Point " + count + " " + corner);
+                                    side4_x = corner.X;
+                                    side4_y = corner.Y;
+                                }
+                                //g.DrawRectangle(_pen1, corner.X - 1, corner.Y - 1, 3, 3);
+                                
+                             
+                                //Console.WriteLine("length of the sides");
+                               
+                            }
+                            
+                           
+                            
+                          
+                            
                         }
-                        else if (shapeChecker.IsConvexPolygon(edgePoints, out corners))
+                        if (shapeChecker.IsConvexPolygon(edgePoints, out corners))
                         {
-                            if (corners.Count == 5)
-                            {
-                                MessageBox.Show("pentagon");
-                            }
-                            /*
-                            //MessageBox.Show(""+_shapeChecker.CheckShapeType(_edgePoint));
+                           
+                           // MessageBox.Show(""+_shapeChecker.CheckShapeType(_edgePoint));
                             System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
                             System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.PaleGreen);
                             System.Drawing.Point[] _coordinates = ToPointsArray(corners);
-                            if (_coordinates.Length == 4)
+                            if (_coordinates.Length == 5)
                             {
                                 int _x = _coordinates[0].X;
                                 int _y = _coordinates[0].Y;
                                 Pen _pen = new Pen(Color.Brown);
                                 string _shapeString = "" + shapeChecker.CheckShapeType(edgePoints);
+                               // MessageBox.Show("pentagon");
                                 g.DrawString(_shapeString, _font, _brush, _x, _y);
                                 g.DrawPolygon(_pen, ToPointsArray(corners));
-                            }*/
+                            }
+                            
                         }
-                        
+                      
                         if (shapeChecker.IsTriangle(edgePoints, out corners))
                         {
                             string _shapeString = "" + shapeChecker.CheckShapeType(edgePoints);
                             System.Drawing.Font _font = new System.Drawing.Font("Segoe UI", 16);
                             System.Drawing.SolidBrush _brush = new System.Drawing.SolidBrush(System.Drawing.Color.Brown);
                             Pen _pen = new Pen(Color.GreenYellow);
+                            Pen _pen1 = new Pen(Color.Blue);
+                           // MessageBox.Show("corners values" + corners.Count);
                             int x = (int)center.X;
                             int y = (int)center.Y;
                             g.DrawString(_shapeString, _font, _brush, x, y);
                             g.DrawPolygon(_pen, ToPointsArray(corners));
+                            foreach (IntPoint corner in corners)
+                            {
+                                g.DrawRectangle(_pen1, corner.X - 1, corner.Y - 1, 3, 3);
+                                Console.WriteLine(corner);
+                            }
                        
                             
                         }
