@@ -60,19 +60,7 @@ namespace WindowsFormsApplication1
             }
             return false;
         }
-        public enum ShapePolygon
-        {
-            Nothing = 0,
-            Square = 1,
-            Circle = 2,
-            EquilateralTriangle = 3,
-            Rectangle = 4,
-            Pentagon = 5,
-            Parallelogram = 6,
-            IsoscelesTriangle = 7,
-            Trapezoid = 8,
-            Rhombus = 9
-        }
+        
         public bool IsCircle(List<IntPoint> edgePoints, out AForge.IntPoint center, out float radius)
         {
             // make sure we have at least 8 points for curcle shape
@@ -395,7 +383,9 @@ namespace WindowsFormsApplication1
                             foreach (IntPoint corner in corners)
                             {
                                 g.DrawRectangle(_pen1, corner.X - 1, corner.Y - 1, 3, 3);
+                                
                                 Console.WriteLine(corner);
+                            
                             }
                        
                             
