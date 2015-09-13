@@ -129,12 +129,36 @@ namespace AforgeTest
                     SimpleShapeChecker shapeChecker = new SimpleShapeChecker();
                     Graphics g = Graphics.FromImage(resImage);
 
+                    List<IntPoint> exteriorPoint;
+                    int exteriorSize = 0;
+
                     for (int i = 0, n = blobs.Length; i < n; i++)
                     {
                         List<IntPoint> edgePoints = blobCounter.GetBlobsEdgePoints(blobs[i]);
                         AForge.Point center;
                         float radius;
                         List<IntPoint> corners;
+
+
+                        //Get the most up down, right, left point 
+                        int maxY, minY, maxX, minX;
+                        maxX = minX = edgePoints[0].X;
+                        maxY = minY = edgePoints[0].Y;
+
+                        foreach(IntPoint point in edgePoints)
+                        {
+                            if (point.X > maxX) maxX = point.X;
+                            if (point.X < minX) minX = point.X;
+                            if (point.Y > maxY) maxY = point.Y;
+                            if (point.Y < minY) minY = point.Y;
+                        }
+                        int es = (maxX - minX) * (maxY - minY);
+                        if (exteriorSize < es)
+                        {
+                            exteriorSize = es;
+                            exteriorPoint = edgePoints;
+                        }
+
 
                         //calls the custom IsCircle method, shapeChecker.isCircle() method can be used for normal thresholds
                         if (IsCircle(edgePoints, out center, out radius))
