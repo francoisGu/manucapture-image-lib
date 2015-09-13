@@ -11,7 +11,7 @@ namespace ManucaptureImageLib.tools
 {
     static class Helper
     {
-        public static Bitmap BytesToBitmap(MemoryStream imageStream)
+        public static Bitmap BytesToBitmap(Stream imageStream)
         {
             Bitmap img = (Bitmap)System.Drawing.Image.FromStream(imageStream);
             return img;

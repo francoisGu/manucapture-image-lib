@@ -1,5 +1,3 @@
-C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.dll.config
-C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.dll
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.pdb
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AForge.Controls.dll
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AForge.DebuggerVisualizers (2010).dll
@@ -42,5 +40,7 @@ C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AFor
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AForge.Video.VFW.xml
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AForge.Video.Ximea.xml
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AForge.Vision.xml
-C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\obj\Debug\manucapture-image-lib.dll
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\obj\Debug\manucapture-image-lib.pdb
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.dll.config
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.dll
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\obj\Debug\manucapture-image-lib.dll
