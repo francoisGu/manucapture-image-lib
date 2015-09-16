@@ -41,6 +41,8 @@ C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AFor
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AForge.Video.Ximea.xml
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\AForge.Vision.xml
 C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\obj\Debug\manucapture-image-lib.pdb
-C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.dll.config
-C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.dll
-C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\obj\Debug\manucapture-image-lib.dll
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.exe.config
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\manucapture-image-lib.exe
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\obj\Debug\manucapture-image-lib.exe
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\obj\Debug\ManucaptureImageLib.csprojResolveAssemblyReference.cache
+C:\development\vs\git\manucapture-image-lib\manucapture-image-lib\bin\Debug\CsPotrace.dll

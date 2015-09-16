@@ -22,5 +22,15 @@ namespace ManucaptureImageLib.tools
         public static readonly float DEFAULT_MIN_ACCEPTABLE_DISTORTION = 0.5f;
 
         public static readonly float DEFAULT_RELATIVE_DISTORTION_LIMIT = 0.1f;
+
+        public static readonly int DEFAULT_IGNORE_AREA = 2;
+
+        public static readonly double DEFAULT_TOLERANCE = 0.2;
+
+        public static readonly double DEFAULT_CORNER_THRESHOLD = 1;
+
+        public static readonly bool DEFAULT_OPTIMIZING = true;
+
+        public static readonly int DEFAULT_VECTORISATION_THRESHOLD = 51;
     }
 }

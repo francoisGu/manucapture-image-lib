@@ -12,6 +12,8 @@ using AForge.Imaging.Filters;
 using AForge.Math.Geometry;
 using AForge;
 using ManucaptureImageLib.classes;
+using System.Collections;
+using CsPotrace;
 
 namespace ManucaptureImageLib.tools
 {
@@ -25,14 +27,20 @@ namespace ManucaptureImageLib.tools
         public readonly int BlobFrameSize;
         public readonly float MinAcceptableDistortion;
         public readonly float RelativeDistortionLimit;
-
+        public readonly int IgnoreArea;
+        public readonly double Tolerance;
+        public readonly double CornerThreshold;
+        public readonly bool Optimizing;
+        public readonly int VectorisationThreshold;
 
         public List<Shape> ResultShapeList { get; set; }
 
         private Bitmap Image { get; set; }
 
+        private static System.Globalization.CultureInfo enUsCulture = System.Globalization.CultureInfo.GetCultureInfo("en-US");
         public ShapeDetector(Stream ImageStream, float TH, float TL, float Sigma, int MaskSize, 
-            int BlobFrameSize, float MinAcceptableDistortion, float RelativeDistortionLimit)
+            int BlobFrameSize, float MinAcceptableDistortion, float RelativeDistortionLimit,
+            int IgnoreArea, double Tolerance, double CornerThreshold, bool Optimizing, int VectorisationThreshold)
         {
 		    // Required parameters
             this.ImageStream = ImageStream;
@@ -44,10 +52,15 @@ namespace ManucaptureImageLib.tools
             this.BlobFrameSize = BlobFrameSize;
             this.MinAcceptableDistortion = MinAcceptableDistortion;
             this.RelativeDistortionLimit = RelativeDistortionLimit;
+            this.IgnoreArea = IgnoreArea;
+            this.Tolerance = Tolerance;
+            this.CornerThreshold = CornerThreshold;
+            this.Optimizing = Optimizing;
+            this.VectorisationThreshold = VectorisationThreshold;
 
             List<Shape> ResultShapeList = null;
             this.Image = SetImage(this.ImageStream);
-            //this.Image = SdBuilder.Image;
+            
             if (applyCannyEdgeFilter())
             {
                 ResultShapeList = recogniseObjects();
@@ -79,7 +92,7 @@ namespace ManucaptureImageLib.tools
 
                     this.Image = CannyData.DisplayImage(CannyData.EdgeMap);
                     //currentImage saved to a temporary tempCanny file, but it is just for testing not used in the project
-                    //this.Image.Save("C:\\development\\Images\\sample\\tempCanny.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    this.Image.Save("C:\\development\\Images\\sample\\tempCanny.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
                 catch (Exception exc)
                 {
@@ -135,28 +148,24 @@ namespace ManucaptureImageLib.tools
                         {
                             int x = (int)center.X;
                             int y = (int)center.Y;
-                            //g.DrawEllipse(pen, (x - radius), (y - radius), (radius * 2), (radius * 2));
                             resultShapeList.Add(new ManucaptureImageLib.classes.Circle(x, y, radius));
                         }
-                        if (shapeChecker.IsTriangle(edgePoints, out corners) 
+                        else if (shapeChecker.IsTriangle(edgePoints, out corners) 
                                         || shapeChecker.IsQuadrilateral(edgePoints, out corners))
                         {
-                            //g.DrawPolygon(pen, Helper.ToPointsArray(corners));
                             
                             List<ManucaptureImageLib.classes.Point> points = Helper.ToPointsArray(corners);
                             ManucaptureImageLib.classes.Polygon polygon = new ManucaptureImageLib.classes.Polygon(points);
                             resultShapeList.Add(polygon);
                         }
-                        /*else if (shapeChecker.IsQuadrilateral(edgePoints, out corners))
+                        else
                         {
-                            System.Drawing.Point[] _coordinates = Helper.ToPointsArray(corners);
-                            if (_coordinates.Length == 4)
-                            {
-                                int _x = _coordinates[0].X;
-                                int _y = _coordinates[0].Y;
-                                g.DrawPolygon(pen, Helper.ToPointsArray(corners));
-                            }
-                        }*/
+                            String pathStr = recognisePath(edgePoints);
+                            Console.WriteLine(pathStr);
+                            System.IO.File.WriteAllText(@"C:\development\Images\sample\PathLines_"+i+".svg", pathStr);
+                            ManucaptureImageLib.classes.Path path = new ManucaptureImageLib.classes.Path(pathStr);
+                            resultShapeList.Add(path);
+                        }
                     }
                     
 
@@ -167,6 +176,367 @@ namespace ManucaptureImageLib.tools
                 }
             }
             return resultShapeList;
+        }
+        #endregion
+
+        #region canny edge filter - 2
+        public Bitmap applyCannyEdgeFilter2(Bitmap BmpInput)
+        {
+            
+            try
+            {
+                byte[] imageSize = Helper.ImageToByte2(BmpInput);
+
+                //canny edge filter threshold filters
+
+                System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(new MemoryStream(imageSize));
+                Canny CannyData = new Canny((System.Drawing.Bitmap)bmp, this.TH, this.TL, this.MaskSize, this.Sigma);
+
+                BmpInput = CannyData.DisplayImage(CannyData.EdgeMap);
+                //currentImage saved to a temporary tempCanny file, but it is just for testing not used in the project
+                BmpInput.Save("C:\\development\\Images\\sample\\tempCanny2.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("ERROR - 2 :-> " + exc.ToString());
+            }
+            
+            return BmpInput;
+            
+
+        }
+        #endregion 
+
+        #region potrace, recognisePath
+        public String recognisePath(List<IntPoint> Corners)
+        {
+            
+            bool[,] Matrix;
+            ArrayList ListOfCurveArray;
+        
+            Potrace.turdsize = Convert.ToInt32(IgnoreArea);
+
+            try{
+                Potrace.alphamax = Convert.ToDouble(Tolerance);
+                Potrace.opttolerance = Convert.ToDouble(CornerThreshold);
+            }catch(Exception e){
+
+            }
+            
+            Potrace.curveoptimizing = Optimizing;
+            Bitmap VectorisedImage = createBitmapFromBlob(Corners);
+            ListOfCurveArray = new ArrayList();
+
+            Matrix = Potrace.BitMapToBinary(VectorisedImage, VectorisationThreshold);
+            Potrace.potrace_trace(Matrix, ListOfCurveArray);
+            VectorisedImage.Save("C:\\development\\Images\\sample\\bmpManuc.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+            String s = export2SVG2(ListOfCurveArray, VectorisedImage.Width, VectorisedImage.Height);
+            
+            return s;
+        }
+        #endregion
+
+        #region export2SVG, converts only paths
+        private static String export2SVG(ArrayList Fig, int Width, int Height)
+        {
+            StringBuilder svg = new StringBuilder();
+            string head = "";
+            svg.AppendLine(head);
+
+            foreach (ArrayList Path in Fig)
+            {
+
+                bool isContour = true;
+                svg.Append("<path d='");
+                for (int i = 0; i < Path.Count; i++)
+                {
+                    Potrace.Curve[] Curves = (Potrace.Curve[])Path[i];
+
+                    string curve_path = isContour ? GetContourPath(Curves) : GetHolePath(Curves);
+
+
+
+                    if (i == Path.Count - 1)
+                    {
+                        svg.Append(curve_path);
+                    }
+                    else
+                    {
+                        svg.AppendLine(curve_path);
+                    }
+
+                    isContour = false;
+
+                }
+                svg.AppendLine("' />");
+
+            }
+
+
+
+            string foot = "";
+            svg.AppendLine(foot);
+            svg.Replace("'", "\"");
+
+
+            return svg.ToString();
+        }
+        #endregion
+
+        #region export to SVG method-2, includes <svg> headers, as original in portrace
+        public static string export2SVG2(ArrayList Fig, int Width, int Height)
+        {
+
+
+            StringBuilder svg = new StringBuilder();
+            string head = String.Format(@"<?xml version='1.0' standalone='no'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 20010904//EN' 
+'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg version='1.0' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid meet'
+width='{0}' height='{1}'  viewBox='0 0 {0} {1}'>
+<g>", Width, Height);
+            svg.AppendLine(head);
+
+            foreach (ArrayList Path in Fig)
+            {
+
+                bool isContour = true;
+                svg.Append("<path d='");
+                for (int i = 0; i < Path.Count; i++)
+                {
+                    Potrace.Curve[] Curves = (Potrace.Curve[])Path[i];
+
+                    string curve_path = isContour ? GetContourPath(Curves) : GetHolePath(Curves);
+
+
+
+                    if (i == Path.Count - 1)
+                    {
+                        svg.Append(curve_path);
+                    }
+                    else
+                    {
+                        svg.AppendLine(curve_path);
+                    }
+
+                    isContour = false;
+
+                }
+                svg.AppendLine("' />");
+
+            }
+
+
+
+            string foot = @"</g>
+</svg>";
+            svg.AppendLine(foot);
+            svg.Replace("'", "\"");
+
+
+            return svg.ToString();
+        }
+        #endregion
+
+        #region create bitmap from blob
+        private Bitmap createBitmapFromBlob(List<IntPoint> Corners)
+        {
+            int max_X = MaxPoint(Corners, true);
+            int max_Y = MaxPoint(Corners, false);
+            int min_X = MinPoint(Corners, true);
+            int min_Y = MinPoint(Corners, false);
+            Bitmap Bmp = new Bitmap(this.Image.Width, this.Image.Height);
+
+            //this is for setting pixels exactly as in the real image, (as original)
+           /* for (int i = min_X; i < max_X; i++)
+            {
+                for (int j = min_Y; j < max_Y; j++)
+                {
+                    Bmp.SetPixel(i, j, this.Image.GetPixel(i, j));
+                }
+            }*/
+
+            for (int i = 0; i < Corners.Count; i++)
+            {
+                try
+                {
+
+                    Bmp.SetPixel(Corners[i].X, Corners[i].Y, this.Image.GetPixel(Corners[i].X, Corners[i].Y));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+
+            }
+            Bmp.Save("C:\\development\\Images\\sample\\tempbmp.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+
+            return Bmp;
+        }
+        #endregion
+
+        #region find max point in blob
+        private int MaxPoint(List<IntPoint> Corners, bool isX)
+        {
+            int max = 0;
+            for (int i = 0; i < Corners.Count; i++)
+            {
+                IntPoint ip = Corners[i];
+                if (isX)
+                {
+                    if (max < ip.X)
+                    {
+                        max = ip.X;
+                    }
+                }
+                else
+                {
+                    if (max < ip.Y)
+                    {
+                        max = ip.Y;
+                    }
+                }
+                
+                
+            }
+                return max;
+        }
+        #endregion
+
+        #region find min point in blob
+        private int MinPoint(List<IntPoint> Corners, bool isX)
+        {
+            int min = 0;
+            if (isX)
+            {
+                min = this.Image.Width;
+            }
+            else
+            {
+                min = this.Image.Height;
+            }
+            for (int i = 0; i < Corners.Count; i++)
+            {
+                IntPoint ip = Corners[i];
+                if (isX)
+                {
+                    if (min > ip.X)
+                    {
+                        min = ip.X;
+                    }
+                }
+                else
+                {
+                    if (min > ip.Y)
+                    {
+                        min = ip.Y;
+                    }
+                }
+
+
+            }
+            return min;
+        }
+        #endregion
+
+        #region get counter path
+        private static string GetContourPath(Potrace.Curve[] Curves)
+        {
+
+            StringBuilder path = new StringBuilder();
+
+            for (int i = 0; i < Curves.Length; i++)
+            {
+                Potrace.Curve Curve = Curves[i];
+
+
+                if (i == 0)
+                {
+                    path.AppendLine("M" + Curve.A.x.ToString("0.0", enUsCulture) + " " + Curve.A.y.ToString("0.0", enUsCulture));
+                }
+
+                if (Curve.Kind == Potrace.CurveKind.Bezier)
+                {
+
+                    path.Append("C" + Curve.ControlPointA.x.ToString("0.0", enUsCulture) + " " + Curve.ControlPointA.y.ToString("0.0", enUsCulture) + " " +
+                                    Curve.ControlPointB.x.ToString("0.0", enUsCulture) + " " + Curve.ControlPointB.y.ToString("0.0", enUsCulture) + " " +
+                                    Curve.B.x.ToString("0.0", enUsCulture) + " " + Curve.B.y.ToString("0.0", enUsCulture));
+
+
+
+
+                }
+                if (Curve.Kind == Potrace.CurveKind.Line)
+                {
+                    path.Append("L" + Curve.B.x.ToString("0.0", enUsCulture) + " " + Curve.B.y.ToString("0.0", enUsCulture));
+
+                }
+                if (i == Curves.Length - 1)
+                {
+                    path.Append("Z");
+                }
+                else
+                {
+                    path.AppendLine("");
+                }
+
+
+            }
+
+
+
+            return path.ToString();
+
+        }
+
+        #endregion
+
+        #region get hole path
+        private static string GetHolePath(Potrace.Curve[] Curves)
+        {
+            StringBuilder path = new StringBuilder();
+
+            for (int i = Curves.Length - 1; i >= 0; i--)
+            {
+                Potrace.Curve Curve = Curves[i];
+
+
+                if (i == Curves.Length - 1)
+                {
+                    path.AppendLine("M" + Curve.B.x.ToString("0.0", enUsCulture) + " " + Curve.B.y.ToString("0.0", enUsCulture));
+                }
+
+                if (Curve.Kind == Potrace.CurveKind.Bezier)
+                {
+
+
+
+                    path.Append("C" + Curve.ControlPointB.x.ToString("0.0", enUsCulture) + " " + Curve.ControlPointB.y.ToString("0.0", enUsCulture) + " " +
+                                  Curve.ControlPointA.x.ToString("0.0", enUsCulture) + " " + Curve.ControlPointA.y.ToString("0.0", enUsCulture) + " " +
+                                  Curve.A.x.ToString("0.0", enUsCulture) + " " + Curve.A.y.ToString("0.0", enUsCulture));
+
+
+
+                }
+                if (Curve.Kind == Potrace.CurveKind.Line)
+                {
+                    path.Append("L" + Curve.B.x.ToString("0.0", enUsCulture) + " " + Curve.B.y.ToString("0.0", enUsCulture));
+
+                }
+                if (i == 0)
+                {
+                    path.Append("Z");
+                }
+                else
+                {
+                    path.AppendLine("");
+                }
+
+            }
+
+
+
+            return path.ToString();
         }
         #endregion
 
