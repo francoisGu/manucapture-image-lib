@@ -11,5 +11,10 @@ namespace ManucaptureImageLib.classes
     {
         public IList<Point> Points { get; set; }
 
+        public Polygon(IList<Point> Points)
+        {
+            this.Points = Points;
+        }
+
     }
 }

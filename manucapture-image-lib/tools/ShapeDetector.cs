@@ -15,78 +15,100 @@ using ManucaptureImageLib.classes;
 
 namespace ManucaptureImageLib.tools
 {
-    class ShapeDetector
+    public class ShapeDetector
     {
-        public float TH { get; set; }
-        public float TL { get; set; }
-        public float Sigma { get; set; }
-        public int MaskSize { get; set; }
-        public int BlobFrameSize { get; set; }
-        public float MinAcceptableDistortion { get; set; }
-        public float RelativeDistortionLimit { get; set; }
+        public readonly Stream ImageStream;        
+        public readonly float TH;
+        public readonly float TL;
+        public readonly float Sigma;
+        public readonly int MaskSize;
+        public readonly int BlobFrameSize;
+        public readonly float MinAcceptableDistortion;
+        public readonly float RelativeDistortionLimit;
 
-        public ShapeDetector()
+
+        public List<Shape> ResultShapeList { get; set; }
+
+        private Bitmap Image { get; set; }
+
+        public ShapeDetector(Stream ImageStream, float TH, float TL, float Sigma, int MaskSize, 
+            int BlobFrameSize, float MinAcceptableDistortion, float RelativeDistortionLimit)
         {
-            this.TH = Utils.DEFAULT_TH;
-            this.TL = Utils.DEFAULT_TL;
-            this.Sigma = Utils.DEFAULT_SIGMA;
-            this.MaskSize = Utils.DEFAULT_MASK_SIZE;
-            this.BlobFrameSize = Utils.DEFAULT_BLOB_FRAME_SIZE;
-            this.MinAcceptableDistortion = Utils.DEFAULT_MIN_ACCEPTABLE_DISTORTION;
-            this.RelativeDistortionLimit = Utils.DEFAULT_RELATIVE_DISTORTION_LIMIT;
+		    // Required parameters
+            this.ImageStream = ImageStream;
+            // optional paramaters
+            this.TH = TH;
+            this.TL = TL;
+            this.Sigma = Sigma;
+            this.MaskSize = MaskSize;
+            this.BlobFrameSize = BlobFrameSize;
+            this.MinAcceptableDistortion = MinAcceptableDistortion;
+            this.RelativeDistortionLimit = RelativeDistortionLimit;
+
+            List<Shape> ResultShapeList = null;
+            this.Image = SetImage(this.ImageStream);
+            //this.Image = SdBuilder.Image;
+            if (applyCannyEdgeFilter())
+            {
+                ResultShapeList = recogniseObjects();
+            } else
+            {
+                Console.WriteLine("ERROR - 1 :-> EDGE FILTERING");
+            }
+            this.ResultShapeList = ResultShapeList;
+	    }
+        
+        private Bitmap SetImage(Stream ImageStream)
+        {
+            return Helper.BytesToBitmap(ImageStream);
         }
 
-        
-
         #region canny edge filter
-        public bool applyCannyEdgeFilter(Bitmap image)
+        public bool applyCannyEdgeFilter()
         {
-            if (image != null)
+            if (this.Image != null)
             {
                 try
                 {
-                    float TH, TL, Sigma;
-                    int MaskSize;
-                    byte[] imageSize = Helper.ImageToByte2(image);
+                    byte[] imageSize = Helper.ImageToByte2(this.Image);
 
                     //canny edge filter threshold filters
-                    TH = (float)Convert.ToDouble(45);
-                    TL = (float)Convert.ToDouble(20);
-                    MaskSize = Convert.ToInt32(5);
-                    Sigma = (float)Convert.ToDouble(50);
-
+                    
                     System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(new MemoryStream(imageSize));
-                    Canny CannyData = new Canny((System.Drawing.Bitmap)bmp, TH, TL, MaskSize, Sigma);
+                    Canny CannyData = new Canny((System.Drawing.Bitmap)bmp, this.TH, this.TL, this.MaskSize, this.Sigma);
 
-                    image = CannyData.DisplayImage(CannyData.EdgeMap);
+                    this.Image = CannyData.DisplayImage(CannyData.EdgeMap);
                     //currentImage saved to a temporary tempCanny file, but it is just for testing not used in the project
-                    image.Save("C:\\development\\Images\\sample\\tempCanny.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    //this.Image.Save("C:\\development\\Images\\sample\\tempCanny.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
                 catch (Exception exc)
                 {
                     Console.WriteLine("ERROR - 2 :-> " + exc.ToString());
                 }
+                return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
+            
         }
         #endregion 
 
         #region recognise objects
-        public List<Shape> recogniseObjects(Bitmap image)
+        public List<Shape> recogniseObjects()
         {
-
-            //int blobMinFrameSize = 10;
 
             List<Shape> resultShapeList = new List<Shape>();
 
-            if (image != null)
+            if (this.Image != null)
             {
                 try
                 {
-                    Bitmap resImage = new Bitmap(image.Width, image.Height);
-                    BitmapData bmData = image.LockBits(
-                        new Rectangle(0, 0, image.Width, image.Height),
-                        ImageLockMode.ReadWrite, image.PixelFormat);
+                    Bitmap resImage = new Bitmap(this.Image.Width, this.Image.Height);
+                    BitmapData bmData = this.Image.LockBits(
+                        new Rectangle(0, 0, this.Image.Width, this.Image.Height),
+                        ImageLockMode.ReadWrite, this.Image.PixelFormat);
 
                     BlobCounter blobCounter = new BlobCounter();
 
@@ -96,7 +118,7 @@ namespace ManucaptureImageLib.tools
                     blobCounter.ProcessImage(bmData);
                     Blob[] blobs = blobCounter.GetObjectsInformation();
                     Pen pen = new Pen(Color.Black);
-                    image.UnlockBits(bmData);
+                    this.Image.UnlockBits(bmData);
 
                     SimpleShapeChecker shapeChecker = new SimpleShapeChecker();
                     Graphics g = Graphics.FromImage(resImage);
@@ -114,14 +136,16 @@ namespace ManucaptureImageLib.tools
                             int x = (int)center.X;
                             int y = (int)center.Y;
                             //g.DrawEllipse(pen, (x - radius), (y - radius), (radius * 2), (radius * 2));
-                            resultShapeList.Add(new Circle(x, y, radius));
+                            resultShapeList.Add(new ManucaptureImageLib.classes.Circle(x, y, radius));
                         }
-                        else if (shapeChecker.IsTriangle(edgePoints, out corners) 
+                        if (shapeChecker.IsTriangle(edgePoints, out corners) 
                                         || shapeChecker.IsQuadrilateral(edgePoints, out corners))
                         {
                             //g.DrawPolygon(pen, Helper.ToPointsArray(corners));
-                            ManucaptureImageLib.classes.Polygon polygon = new ManucaptureImageLib.classes.Polygon();
-                            polygon.Points = Helper.ToPointsArray(corners);
+                            
+                            List<ManucaptureImageLib.classes.Point> points = Helper.ToPointsArray(corners);
+                            ManucaptureImageLib.classes.Polygon polygon = new ManucaptureImageLib.classes.Polygon(points);
+                            resultShapeList.Add(polygon);
                         }
                         /*else if (shapeChecker.IsQuadrilateral(edgePoints, out corners))
                         {
